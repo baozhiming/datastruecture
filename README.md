@@ -1,2 +1,2 @@
 # datastruecture
-data base practise
+data base practise by python
