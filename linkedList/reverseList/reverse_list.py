@@ -52,7 +52,7 @@ class Solution:
         """递归公式：head.next.next = head, new_head = recurse(head) """
         if head is None or head.next is None:
             return head
-        new_head = self.reverse_list_by_recurse(head)
+        new_head = self.reverse_list_by_recurse(head.next)
         head.next.next = head
         head.next = None
         return new_head
