@@ -46,6 +46,19 @@ class Solution:
         l.next = r
         return head
 
+    def is_palindrome_by_recurse(self, head: ListNode) -> bool:
+        self.pre_node = head
+
+        def check_palindrome(current_node: ListNode):
+            if current_node is not None:
+                if not check_palindrome(current_node.next):
+                    return False
+                if self.pre_node.val != current_node.val:
+                    return False
+                self.pre_node = self.pre_node.next
+            return True
+        return check_palindrome(head)
+
 
 """
 思路：
