@@ -1,8 +1,8 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 
 
 class ListNode:
-    def __init__(self, val: int = 0, next=None):
+    def __init__(self, val: Union[str, int] = 0, next=None):
         self.val = val
         self.next = next
 
