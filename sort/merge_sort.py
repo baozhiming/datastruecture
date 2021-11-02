@@ -5,39 +5,36 @@ from typing import List
 
 
 def merge_sort(nums: List) -> List:
-    if not nums or len(nums) == 1:
-        return nums
     return recurse(nums, 0, len(nums) - 1)
 
 
-def recurse(nums: List, l: int, r: int):
-    if l >= r:
+def recurse(nums: List, left: int, right: int):
+    if left >= right:
         return nums
-    q = int((l + r) / 2)
-    nums1 = recurse(nums, l, q)
-    nums2 = recurse(nums, q+1, r)
-    re = merge(nums1, l, q, nums2, q+1, r)
-    return re
+    middle = left + int((right - left) / 2)
+    recurse(nums, left, middle)
+    recurse(nums, middle + 1, right)
+    merge(nums, left, middle, right)
+    return nums
 
 
-def merge(nums1: List, l1, r1, nums2: List, l2, r2) -> List:
-    i, j, k = l1, l2, 0
-    nums = []
-    while i <= r1 and j <= r2:
-        if nums1[i] <= nums2[j]:
-            nums.append(nums1[i])
-            i += 1
+def merge(nums: List, left: int, middle: int, right: int):
+    pre, last = left, middle+1
+    tmp_nums = []
+    while pre <= middle and last <= right:
+        if nums[pre] <= nums[last]:
+            tmp_nums.append(nums[pre])
+            pre += 1
         else:
-            nums.append(nums2[j])
-            j += 1
-    while i <= r1:
-        nums.append(nums1[i])
-        i += 1
-    while j <= r2:
-        nums.append(nums2[j])
-        j += 1
-    nums1[l1:r2+1] = nums
-    return nums1
+            tmp_nums.append(nums[last])
+            last += 1
+    while pre <= middle:
+        tmp_nums.append(nums[pre])
+        pre += 1
+    while last <= right:
+        tmp_nums.append(nums[last])
+        last += 1
+    nums[left:right+1] = tmp_nums
 
 
 """
