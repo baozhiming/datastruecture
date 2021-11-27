@@ -213,3 +213,33 @@ def bsearch_in_cycle_order_array(nums: List, n: int) -> int:
         else:
             low = low + 1
     return -1
+
+
+def bsearch_in_cycle_order_array_by_recurse(nums: List, n: int) -> int:
+    """
+    1. 先判断那一半是有序的，那一半是循环的
+    2。 判断目标值在哪一半
+    3。 递归
+    :param nums:
+    :param n:
+    :return:
+    """
+    return cycle_recurse(nums, 0, len(nums) - 1, n)
+
+
+def cycle_recurse(nums: List, left: int, right: int, n: int) -> int:
+    if left > right:
+        return -1
+    middle = left + (right - left) // 2
+    if nums[middle] == n:
+        return middle
+    elif nums[left] <= nums[middle]:
+        if nums[left] <= n < nums[middle]:
+            return cycle_recurse(nums, left, middle - 1, n)
+        else:
+            return cycle_recurse(nums, middle + 1, right, n)
+    else:
+        if nums[middle] < n <= nums[right]:
+            return cycle_recurse(nums, middle + 1, right, n)
+        else:
+            return cycle_recurse(nums, left, middle - 1, n)
