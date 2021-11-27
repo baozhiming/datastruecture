@@ -1,6 +1,7 @@
 from binary_search.bsearch import (search_left_element_2, search_right_element_2,
                                    bsearch_left_not_less_2, bsearch_right_not_greater2,
-                                   bsearch_in_cycle_order_array, bsearch_in_cycle_order_array_by_recurse)
+                                   bsearch_in_cycle_order_array, bsearch_in_cycle_order_array_by_recurse,
+                                   bsearch_in_cycle_order_array_2)
 
 
 def test_search_left_element_2():
@@ -139,3 +140,23 @@ def test_bsearch_in_cycle_order_array_by_recurse():
 
     nums = [8, 9, 2, 3, 4]
     assert bsearch_in_cycle_order_array_by_recurse(nums, 9) == 1
+
+
+def test_bsearch_in_cycle_order_array_2():
+    nums = [2, 5, 6, 0, 0, 1, 2]
+    assert bsearch_in_cycle_order_array_2(nums, 0) is True
+
+    nums = [2, 5, 6, 0, 0, 1, 2]
+    assert bsearch_in_cycle_order_array_2(nums, 2) is True
+
+    nums = [2, 5, 6, 0, 0, 1, 2]
+    assert bsearch_in_cycle_order_array_2(nums, 1) is True
+
+    nums = [2, 5, 6, 0, 0, 1, 2]
+    assert bsearch_in_cycle_order_array_2(nums, 5) is True
+
+    nums = [2, 5, 6, 0, 0, 1, 2]
+    assert bsearch_in_cycle_order_array_2(nums, 6) is True
+
+    nums = [2, 5, 6, 0, 0, 1, 2]
+    assert bsearch_in_cycle_order_array_2(nums, 8) is False

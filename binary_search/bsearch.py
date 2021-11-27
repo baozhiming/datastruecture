@@ -243,3 +243,27 @@ def cycle_recurse(nums: List, left: int, right: int, n: int) -> int:
             return cycle_recurse(nums, middle + 1, right, n)
         else:
             return cycle_recurse(nums, left, middle - 1, n)
+
+
+def bsearch_in_cycle_order_array_2(nums: List, target: int) -> bool:
+    """返回循环有序数组中，值等于给定值的元素, 有重复的元素"""
+    low = 0
+    high = len(nums) - 1
+    while low <= high:
+        middle = low + (high - low) // 2
+        if nums[middle] == target:
+            return True
+        elif nums[low] == nums[middle] == nums[high]:
+            low += 1
+            high -= 1
+        elif nums[low] <= nums[middle]:
+            if nums[low] <= target < nums[middle]:
+                high = middle - 1
+            else:
+                low = middle + 1
+        else:
+            if nums[middle] < target <= nums[high]:
+                low = middle + 1
+            else:
+                high = middle - 1
+    return False
