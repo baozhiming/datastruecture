@@ -215,6 +215,28 @@ def bsearch_in_cycle_order_array(nums: List, n: int) -> int:
     return -1
 
 
+def bsearch_in_cycle_order_array2(nums: List, n: int) -> int:
+    """返回循环有序数组中，值等于给定值的元素, 没有重复的元素
+    方法：先判断那一半是有序的，那一半是循环的；判断目标值在那一半；更新索引
+    """
+    low, high = 0, len(nums) - 1
+    while low <= high:
+        middle = low + (high - low) // 2
+        if nums[middle] == n:
+            return middle
+        elif nums[low] < nums[middle]:
+            if nums[low] <= n < nums[middle]:
+                high = middle - 1
+            else:
+                low = middle + 1
+        elif nums[low] > nums[middle]:
+            if nums[middle] < n <= nums[high]:
+                low = middle + 1
+            else:
+                high = middle - 1
+    return -1
+
+
 def bsearch_in_cycle_order_array_by_recurse(nums: List, n: int) -> int:
     """
     1. 先判断那一半是有序的，那一半是循环的
