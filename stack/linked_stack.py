@@ -19,7 +19,7 @@ class LinkedStack:
         if self.head.next is None:
             return None
         val = self.head.next.val
-        self.head.next = not self.head.next.next
+        self.head.next = self.head.next.next
         return val
 
     def __repr__(self):

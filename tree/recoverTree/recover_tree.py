@@ -134,6 +134,14 @@ class Solution:
 
         inOrderReplace(root)
 
+from tree.node import array2tree
+from tree.order.order import preOrderPrint
+
+root = array2tree([1,2,3])
+h = Solution()
+a = h.recoverTree2(root)
+preOrderPrint(a)
+
 
 
 
