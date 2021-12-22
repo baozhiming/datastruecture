@@ -83,7 +83,62 @@ class Solution:
         inOrderReplace(root)
 
     def recoverTree2(self, root: Optional[TreeNode]) -> None:
-        pass
+        from stack.linked_stack import LinkedStack
+        stack = LinkedStack()
+        if root is None:
+            return
+        current = root
+        val = None
+
+        i, j = None, None
+        while current is not None:
+            if current.left is not None:
+                stack.push(current)
+                current = current.left
+            else:
+                if val is None:
+                    val = current.val
+                elif val > current.val:
+                    if i is None:
+                        i = val
+                        j = current.val
+                    else:
+                        j = current.val
+                        break
+                val = current.val
+                if current.right is not None:
+                    current = current.right
+                else:
+                    parent = stack.pop()
+                    if parent is None:
+                        break
+                    if val > parent.val:
+                        if i is None:
+                            i = val
+                            j = parent.val
+                        else:
+                            j = parent.val
+                            break
+                    val = parent.val
+                    current = parent.right
+
+        def inOrderReplace(node: Optional[TreeNode]):
+            if node is None:
+                return
+            if node.val == i:
+                node.val = j
+            elif node.val == j:
+                node.val = i
+            inOrderReplace(node.left)
+            inOrderReplace(node.right)
+
+        inOrderReplace(root)
+
+
+
+
+
+
 
 
 
