@@ -83,56 +83,31 @@ class Solution:
         inOrderReplace(root)
 
     def recoverTree2(self, root: Optional[TreeNode]) -> None:
-        from stack.linked_stack import LinkedStack
-        stack = LinkedStack()
-        if root is None:
-            return
-        current = root
-        val = None
+        stack = []
+        new_root = root
+        last_node, x, y = None, None, None
+        while root is not None or len(stack) != 0:
+            while root is not None:
+                stack.append(root)
+                root = root.left
 
-        i, j = None, None
-        while current is not None:
-            if current.left is not None:
-                stack.push(current)
-                current = current.left
-            else:
-                if val is None:
-                    val = current.val
-                elif val > current.val:
-                    if i is None:
-                        i = val
-                        j = current.val
-                    else:
-                        j = current.val
-                        break
-                val = current.val
-                if current.right is not None:
-                    current = current.right
+            current = stack.pop()
+            if last_node is not None and current is not None and last_node.val > current.val:
+                if x is None:
+                    x = last_node
+                    y = current
                 else:
-                    parent = stack.pop()
-                    if parent is None:
-                        break
-                    if val > parent.val:
-                        if i is None:
-                            i = val
-                            j = parent.val
-                        else:
-                            j = parent.val
-                            break
-                    val = parent.val
-                    current = parent.right
+                    y = current
+                    break
 
-        def inOrderReplace(node: Optional[TreeNode]):
-            if node is None:
-                return
-            if node.val == i:
-                node.val = j
-            elif node.val == j:
-                node.val = i
-            inOrderReplace(node.left)
-            inOrderReplace(node.right)
+            last_node = current
+            root = current.right
 
-        inOrderReplace(root)
+        tmp = x.val
+        x.val = y.val
+        y.val = tmp
+
+
 
 from tree.node import array2tree
 from tree.order.order import preOrderPrint
