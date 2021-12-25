@@ -83,56 +83,31 @@ class Solution:
         inOrderReplace(root)
 
     def recoverTree2(self, root: Optional[TreeNode]) -> None:
-        from stack.linked_stack import LinkedStack
-        stack = LinkedStack()
-        if root is None:
-            return
-        current = root
-        val = None
+        stack = []
+        new_root = root
+        last_node, x, y = None, None, None
+        while root is not None or len(stack) != 0:
+            while root is not None:
+                stack.append(root)
+                root = root.left
 
-        i, j = None, None
-        while current is not None:
-            if current.left is not None:
-                stack.push(current)
-                current = current.left
-            else:
-                if val is None:
-                    val = current.val
-                elif val > current.val:
-                    if i is None:
-                        i = val
-                        j = current.val
-                    else:
-                        j = current.val
-                        break
-                val = current.val
-                if current.right is not None:
-                    current = current.right
+            current = stack.pop()
+            if last_node is not None and current is not None and last_node.val > current.val:
+                if x is None:
+                    x = last_node
+                    y = current
                 else:
-                    parent = stack.pop()
-                    if parent is None:
-                        break
-                    if val > parent.val:
-                        if i is None:
-                            i = val
-                            j = parent.val
-                        else:
-                            j = parent.val
-                            break
-                    val = parent.val
-                    current = parent.right
+                    y = current
+                    break
 
-        def inOrderReplace(node: Optional[TreeNode]):
-            if node is None:
-                return
-            if node.val == i:
-                node.val = j
-            elif node.val == j:
-                node.val = i
-            inOrderReplace(node.left)
-            inOrderReplace(node.right)
+            last_node = current
+            root = current.right
 
-        inOrderReplace(root)
+        tmp = x.val
+        x.val = y.val
+        y.val = tmp
+
+
 
 from tree.node import array2tree
 from tree.order.order import preOrderPrint
@@ -154,5 +129,7 @@ preOrderPrint(a)
 方法1：中序遍历获得数组之后，数组的值是递增的。当有两个节点互换，对应的是，数组中两个节点互换。所以找到互换的两个值。通过找到的值，遍历树，交换值。
 时间复杂度：O(n)
 空间复杂度: O(n)
-
+方法2：中序遍历使用递归时，临时栈占用了O（n）的空间。所以可以使用栈手动模拟入栈出栈过程。
+时间复杂度：(n)
+空间复杂度：O(high) 和高度成正比
 """
