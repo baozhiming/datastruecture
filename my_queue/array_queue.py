@@ -5,7 +5,7 @@ from typing import Union, Optional
 
 
 class ArrayQueue:
-    def __init__(self, n: int):
+    def __init__(self, n: int = 10):
         self.array = []
         self.n = n
         self.head = 0

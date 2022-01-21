@@ -22,6 +22,9 @@ class LinkedStack:
         self.head.next = self.head.next.next
         return val
 
+    def is_empty(self):
+        return self.head.next is None
+
     def __repr__(self):
         current = self.head.next
         nums = []

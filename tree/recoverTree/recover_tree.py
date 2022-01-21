@@ -108,15 +108,134 @@ class Solution:
         y.val = tmp
 
 
+    def recoverTree3(self, root: Optional[TreeNode]) -> None:
+        last_node = None
+        x, y = None, None
 
-from tree.node import array2tree
-from tree.order.order import preOrderPrint
+        def find_predecessor(root: TreeNode):
+            if root is None:
+                return None
+            if root.left is None:
+                return None
+            node = root.left
+            while node.right is not None:
+                if node.right == root:
+                    return node
+                node = node.right
+            return node
 
-root = array2tree([1,2,3])
-h = Solution()
-a = h.recoverTree2(root)
-preOrderPrint(a)
+        while root is not None:
+            if root.left is not None:
+                predecessor = find_predecessor(root)
+                if predecessor.right != root:
+                    predecessor.right = root
+                    root = root.left
+                else:
+                    if last_node is not None and root is not None and last_node.val >= root.val:
+                        if x is None:
+                            x = last_node
+                            y = root
+                        else:
+                            y = root
+                            predecessor.right = None
+                    last_node = root
+                    predecessor.right = None
+                    root = root.right
+            else:
+                if last_node is not None and root is not None and last_node.val >= root.val:
+                    if x is None:
+                        x = last_node
+                        y = root
+                    else:
+                        y = root
+                last_node = root
+                root = root.right
 
+        tmp = x.val
+        x.val = y.val
+        y.val = tmp
+
+
+def stringToTreeNode(input):
+    input = input.strip()
+    input = input[1:-1]
+    if not input:
+        return None
+
+    inputValues = [s.strip() for s in input.split(',')]
+    root = TreeNode(int(inputValues[0]))
+    nodeQueue = [root]
+    front = 0
+    index = 1
+    while index < len(inputValues):
+        node = nodeQueue[front]
+        front = front + 1
+
+        item = inputValues[index]
+        index = index + 1
+        if item != "null":
+            leftNumber = int(item)
+            node.left = TreeNode(leftNumber)
+            nodeQueue.append(node.left)
+
+        if index >= len(inputValues):
+            break
+
+        item = inputValues[index]
+        index = index + 1
+        if item != "null":
+            rightNumber = int(item)
+            node.right = TreeNode(rightNumber)
+            nodeQueue.append(node.right)
+    return root
+
+
+def treeNodeToString(root):
+    if not root:
+        return "[]"
+    output = ""
+    queue = [root]
+    current = 0
+    while current != len(queue):
+        node = queue[current]
+        current = current + 1
+
+        if not node:
+            output += "null, "
+            continue
+
+        output += str(node.val) + ", "
+        queue.append(node.left)
+        queue.append(node.right)
+    return "[" + output[:-2] + "]"
+
+
+def main():
+    import sys
+    import io
+    def readlines():
+        for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
+            yield line.strip('\n')
+
+    while True:
+        try:
+            line = "[1,3,null,null,2]"
+            root = stringToTreeNode(line);
+
+            ret = Solution().recoverTree3(root)
+
+            out = treeNodeToString(root)
+            if ret is not None:
+                print("Do not return anything, modify root in-place instead.")
+            else:
+                print(out)
+            break
+        except StopIteration:
+            break
+
+
+if __name__ == '__main__':
+    main()
 
 
 

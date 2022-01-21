@@ -58,3 +58,23 @@ def postOrderPrint(root: Optional[Node]):
     postOrder(root.left)
     postOrder(root.right)
     print(f"{root.val} ->")
+
+def postOrder2(root: Optional[Node]):
+    if root is None:
+        return
+    stack = list()
+    re = []
+    pre = None
+    while root is not None or len(stack) != 0:
+        while root is not None:
+            stack.append(root)
+            root = root.left
+
+        node = stack.pop()
+        if node.right is None or node.right == pre:
+            re.append(node.val)
+            pre = node
+        else:
+            stack.append(node)
+            root = node.right
+    return re

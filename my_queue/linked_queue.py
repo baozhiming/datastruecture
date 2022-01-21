@@ -6,7 +6,7 @@ from linkedList.list_node import ListNode
 
 
 class LinkedQueue:
-    def __init__(self, n: int):
+    def __init__(self, n: int = 10):
         self.head = ListNode()
         self.n = n
         self.count = 0
@@ -26,3 +26,6 @@ class LinkedQueue:
         self.head.next = self.head.next.next
         self.count -= 1
         return re
+
+    def is_empty(self):
+        return self.count == 0
