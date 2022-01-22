@@ -3,7 +3,7 @@ from sort.select_sort import select_sort
 from sort.insert_sort import insert_sort
 from sort.merge_sort import merge_sort
 from sort.quick_sort import quick_sort
-
+from sort.heap_sort import heap_sort
 
 def test_bubble_sort():
     nums = [4, 5, 6, 3, 2, 1]
@@ -113,3 +113,29 @@ def test_quick_sort():
     nums = [4]
     re = quick_sort(nums)
     assert re == [4]
+
+
+def test_heap_sort():
+    nums = [4, 5, 6, 3, 1, 2]
+    re = heap_sort(nums)
+    assert re == [1, 2, 3, 4, 5, 6]
+
+    nums = [6, 5, 4, 3, 2, 1]
+    re = heap_sort(nums)
+    assert re == [1, 2, 3, 4, 5, 6]
+
+    nums = [1, 2, 3, 4, 5, 6]
+    re = heap_sort(nums)
+    assert re == [1, 2, 3, 4, 5, 6]
+
+    nums = [4, 5, 6, 2, 2, 1]
+    re = heap_sort(nums)
+    assert re == [1, 2, 2, 4, 5, 6]
+
+    nums = [4]
+    re = heap_sort(nums)
+    assert re == [4]
+
+    nums = [5, 3]
+    re = heap_sort(nums)
+    assert re == [3, 5]
