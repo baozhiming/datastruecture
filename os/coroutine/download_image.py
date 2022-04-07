@@ -40,10 +40,11 @@ async def main():
 if __name__ == '__main__':
     start = time()
 
-    event_loop = asyncio.get_event_loop()
-    try:
-        event_loop.run_until_complete(main())
-    finally:
-        event_loop.close()
+    # event_loop = asyncio.get_event_loop()
+    # try:
+    #     event_loop.run_until_complete(main())
+    # finally:
+    #     event_loop.close()
+    asyncio.run(main())
 
     logger.info('Download time: %s seconds', time() - start)

@@ -8,7 +8,7 @@ def test_is_palindrome():
     head = list2linked_list(nums)
     result = echo_linked_list(head)
     assert result == '1 -> 2 -> 2 -> 1 -> None'
-    is_palindrome = solution.is_palindrome(head)
+    is_palindrome = solution.is_palindrome_by_recurse(head)
     assert is_palindrome is True
 
     nums = [1, 2, 5, 2, 1]

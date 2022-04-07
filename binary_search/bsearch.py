@@ -55,7 +55,7 @@ def search_right_element(nums: List, n: int) -> int:
     high = len(nums) - 1
     while low <= high:
         middle = low + (high - low) // 2
-        if nums[middle] == n:
+        if nums[middle] == n:   # TODO 我这个写法直接变成了顺序遍历，不适用
             re = middle + 1
             while re < len(nums) and nums[re] == n:
                 re += 1

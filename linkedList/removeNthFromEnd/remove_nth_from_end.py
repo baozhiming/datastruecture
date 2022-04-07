@@ -9,7 +9,7 @@ class Solution:
     def remove_nth_from_end(self, head: ListNode, n: int) -> ListNode:
         if head is None:
             return head
-        dummy = ListNode
+        dummy = ListNode()
         dummy.next = head
         prev_node = dummy
         curr_node = dummy

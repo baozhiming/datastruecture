@@ -1,5 +1,5 @@
 from typing import List, Optional, Union
-
+import sys
 
 class ListNode:
     def __init__(self, val: Union[str, int] = 0, next=None):
@@ -23,3 +23,4 @@ def echo_linked_list(head: Optional[ListNode]):
     if head is None:
         return "None"
     return f"{head.val} -> " + echo_linked_list(head.next)
+

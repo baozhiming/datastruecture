@@ -59,6 +59,7 @@ def postOrderPrint(root: Optional[Node]):
     postOrder(root.right)
     print(f"{root.val} ->")
 
+
 def postOrder2(root: Optional[Node]):
     if root is None:
         return

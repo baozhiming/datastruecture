@@ -57,6 +57,26 @@ class Solution:
         head.next = None
         return new_head
 
+    def reversePrint(self, head: ListNode) -> List[int]:
+        if head is None:
+            return []
+        low, high = None, head
+        while high is not None:
+            tmp = high.next
+            high.next = low
+            low = high
+            high = tmp
+
+        re = []
+        while low is not None:
+            re.append(low.val)
+            low = low.next
+        return re
+
+
+if __name__ == "__main__":
+    handler = Solution()
+    print(handler.reversePrint(handler.list2linked_list([1, 3, 2])))
 
 """
 使用迭代和递归两个方法。

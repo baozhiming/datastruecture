@@ -5,6 +5,8 @@ from typing import List
 
 class Solution:
     def is_palindrome(self, head: ListNode) -> bool:
+        if not head:
+            return True
         middle_node = self.middle_node(head)
         tail_node = self.reverse_list(middle_node)
         result = self.compare_palindrome(head, tail_node)
@@ -37,8 +39,6 @@ class Solution:
         return True
 
     def recover_list(self, l: ListNode, r: ListNode) -> ListNode:
-        if l is None:
-            return l
         r = self.reverse_list(r)
         head = l
         while l.next is not None:
@@ -50,6 +50,7 @@ class Solution:
         self.pre_node = head
 
         def check_palindrome(current_node: ListNode):
+            # 这个if之前写成了while，导致错误
             if current_node is not None:
                 if not check_palindrome(current_node.next):
                     return False
@@ -58,6 +59,9 @@ class Solution:
                 self.pre_node = self.pre_node.next
             return True
         return check_palindrome(head)
+
+
+
 
 
 """
