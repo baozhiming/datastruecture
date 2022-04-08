@@ -91,6 +91,43 @@ class Solution:
 
         return exist_word
 
+    def exist_optimizatin(self, board: List[List[str]], word: str) -> bool:
+        """
+        简化写法，简化主要利用了or运算符可，如果第一个为True，则不会计算后面的表达式。所以将所有的递归放到or中
+        """
+        if not board and not word:
+            return True
+        if not board:
+            return False
+        if not word:
+            return True
+        exist_word = False
+        rows, cols = len(board), len(board[0])
+
+        def backtracking(row: int, col: int, word_index: int, states: List[List[int]]):
+            nonlocal board, rows, cols, word, exist_word
+            if row < 0 or row == rows or col < 0 or col == cols: return False
+            if board[row][col] != word[word_index]: return False
+            if states[row][col] == 1: return False
+            if word_index == len(word) - 1:
+                return True
+
+            states[row][col] = 1
+            re = (backtracking(row - 1, col, word_index + 1, states) or
+                  backtracking(row + 1, col, word_index + 1, states) or
+                  backtracking(row, col - 1, word_index + 1, states) or
+                  backtracking(row, col + 1, word_index + 1, states))
+            states[row][col] = 0
+            return re
+
+        for i in range(rows):
+            for j in range(cols):
+                states = [[0 for i in range(cols)] for _ in range(rows)]
+                if backtracking(i, j, 0, states):
+                    return True
+
+        return False
+
 
 handler = Solution()
 re = handler.exist([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "ABCCED")
@@ -109,11 +146,9 @@ re = handler.exist([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", 
 print(re)
 assert re is False
 
-
 re = handler.exist([["a", "b"], ["c", "d"]], "abcd")
 print(re)
 assert re is False
-
 
 """
 做这道题的时候，有两种情况没有考虑到，导致时间超时
@@ -122,3 +157,28 @@ assert re is False
 2。
 没有添加89、90行。还是会重复回溯
 """
+
+handler = Solution()
+re = handler.exist_optimizatin([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "ABCCED")
+print(re)
+assert re is True
+
+re = handler.exist_optimizatin([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "BCCED")
+print(re)
+assert re is True
+
+re = handler.exist_optimizatin([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "CCED")
+print(re)
+assert re is True
+
+re = handler.exist_optimizatin([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "BCCD")
+print(re)
+assert re is False
+
+re = handler.exist_optimizatin([["a", "b"], ["c", "d"]], "abcd")
+print(re)
+assert re is False
+
+re = handler.exist_optimizatin([["a", "a"]], "aaa")
+print(re)
+assert re is False
